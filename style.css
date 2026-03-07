@@ -739,3 +739,44 @@ body {
 .btn-call-cs:active {
   background: var(--rescue-bg);
 }
+
+/* Location drawer - trượt từ trái sang phải */
+.location-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.location-drawer-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.location-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 420px;
+  height: 100%;
+  background: var(--card-bg);
+  z-index: 1000;
+  transform: translateX(-100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.location-drawer.open {
+  transform: translateX(0);
+}
+
+.location-drawer iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}

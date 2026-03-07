@@ -11,16 +11,39 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    .select-location-page { padding-bottom: 180px; }
+    .select-location-page {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+    .map-fullscreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 0;
+      background: var(--border);
+    }
+    #map {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
     .search-bar-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 12px 16px;
-      background: var(--card-bg);
+      padding-top: max(12px, env(safe-area-inset-top));
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 100;
     }
     .btn-back-map {
@@ -98,20 +121,18 @@
     .search-result-item:last-child { border-bottom: none; }
     .search-result-item:hover { background: var(--rescue-bg); }
     .search-result-item.selected { background: var(--rescue-bg); color: var(--rescue-primary-dark); }
-    .map-container {
-      height: 300px;
-      width: 100%;
-      background: var(--border);
-      position: relative;
-    }
-    #map { height: 100%; width: 100%; }
     .selected-location-card {
-      margin: 16px;
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(100px + env(safe-area-inset-bottom));
+      z-index: 90;
       padding: 16px;
-      background: var(--card-bg);
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(8px);
       border-radius: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
     }
     .selected-location-card h3 {
       font-size: 15px;
@@ -126,10 +147,12 @@
       bottom: 0;
       left: 0;
       right: 0;
+      z-index: 100;
       padding: 16px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       background: var(--card-bg);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+      border-top: 1px solid var(--border);
     }
     .btn-confirm {
       width: 100%;
@@ -149,6 +172,10 @@
   </style>
 </head>
 <body class="rescue-theme select-location-page">
+  <div class="map-fullscreen">
+    <div id="map"></div>
+  </div>
+
   <div class="search-bar-wrap">
     <button type="button" class="btn-back-map" id="btnBack" aria-label="Quay lại">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -162,10 +189,6 @@
       </div>
       <div class="search-results hidden" id="searchResults"></div>
     </div>
-  </div>
-
-  <div class="map-container">
-    <div id="map"></div>
   </div>
 
   <div class="selected-location-card">

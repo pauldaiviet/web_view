@@ -44,6 +44,10 @@ function initMap() {
   });
 
   updateSelectedUI();
+
+  if (window.parent !== window) {
+    setTimeout(() => map.invalidateSize(), 400);
+  }
 }
 
 async function searchAddress(query) {
@@ -117,7 +121,9 @@ function confirmAndGoBack() {
     incidentLocationLat: selectedLocation.lat,
     incidentLocationLong: selectedLocation.lng,
   };
-  if (window.opener && typeof window.opener.updateRescueLocation === 'function') {
+  if (window.parent !== window) {
+    window.parent.postMessage({ type: 'locationUpdate', data }, '*');
+  } else if (window.opener && typeof window.opener.updateRescueLocation === 'function') {
     window.opener.updateRescueLocation(data);
     window.close();
   } else {
@@ -130,7 +136,9 @@ function init() {
   initMap();
 
   document.getElementById('btnBack').addEventListener('click', () => {
-    if (window.opener) {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'locationDrawerClose' }, '*');
+    } else if (window.opener) {
       window.close();
     } else {
       window.history.back();

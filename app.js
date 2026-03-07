@@ -280,18 +280,6 @@ async function init() {
     });
   }
 
-  const statusTimeEl = document.getElementById('statusTime');
-  if (statusTimeEl) {
-    const updateTime = () => {
-      statusTimeEl.textContent = new Date().toLocaleTimeString('vi-VN', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
-      });
-    };
-    updateTime();
-    setInterval(updateTime, 60000);
-  }
 
   const container = document.getElementById('vehicleIncidentContainer');
   if (container) {
@@ -307,16 +295,40 @@ async function init() {
   }
 
   const btnEditLocation = document.querySelector('.btn-edit-location');
-  if (btnEditLocation) {
-    btnEditLocation.addEventListener('click', () => {
-      const lat = currentOrderData?.incidentLocationLat ?? currentOrderData?.rescueStationLat ?? 21.018;
-      const lng = currentOrderData?.incidentLocationLong ?? currentOrderData?.rescueStationLong ?? 105.815;
-      const address = currentOrderData?.incidentLocation ?? currentOrderData?.rescueStationAddress ?? 'Hà Nội, Việt Nam';
-      const url = `select-location.html?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`;
-      const popup = window.open(url, 'selectLocation', 'width=420,height=700,scrollbars=yes,resizable=yes');
-      if (!popup) window.location.href = url;
-    });
+  const drawer = document.getElementById('locationDrawer');
+  const drawerOverlay = document.getElementById('locationDrawerOverlay');
+  const drawerIframe = document.getElementById('locationDrawerIframe');
+
+  function openLocationDrawer() {
+    const lat = currentOrderData?.incidentLocationLat ?? currentOrderData?.rescueStationLat ?? 21.018;
+    const lng = currentOrderData?.incidentLocationLong ?? currentOrderData?.rescueStationLong ?? 105.815;
+    const address = currentOrderData?.incidentLocation ?? currentOrderData?.rescueStationAddress ?? 'Hà Nội, Việt Nam';
+    const url = `select-location.html?lat=${lat}&lng=${lng}&address=${encodeURIComponent(address)}`;
+    drawerIframe.src = url;
+    drawer?.classList.add('open');
+    drawerOverlay?.classList.add('open');
   }
+
+  function closeLocationDrawer() {
+    drawer?.classList.remove('open');
+    drawerOverlay?.classList.remove('open');
+  }
+
+  if (btnEditLocation) {
+    btnEditLocation.addEventListener('click', openLocationDrawer);
+  }
+
+  drawerOverlay?.addEventListener('click', closeLocationDrawer);
+
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'locationUpdate' && e.data?.data) {
+      window.updateRescueLocation(e.data.data);
+      closeLocationDrawer();
+      drawerIframe.src = 'about:blank';
+    } else if (e.data?.type === 'locationDrawerClose') {
+      closeLocationDrawer();
+    }
+  });
 
   await loadOrder();
 }
