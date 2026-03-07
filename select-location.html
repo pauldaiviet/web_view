@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Chọn vị trí - Bản đồ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .select-location-page { padding-bottom: 180px; }
+    .search-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .btn-back-map {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .search-input-wrap {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .search-input {
+      width: 100%;
+      padding: 12px 40px 12px 16px;
+      font-size: 15px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #f9fafb;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--rescue-primary);
+    }
+    .btn-clear-search {
+      position: absolute;
+      right: 12px;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: var(--text-muted);
+      color: white;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-clear-search.visible { display: flex; }
+    .search-results {
+      background: var(--card-bg);
+      margin: 0 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-height: 200px;
+      overflow-y: auto;
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 99;
+      top: 100%;
+      margin-top: 4px;
+    }
+    .search-results.hidden { display: none; }
+    .search-result-item {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .search-result-item:last-child { border-bottom: none; }
+    .search-result-item:hover { background: var(--rescue-bg); }
+    .search-result-item.selected { background: var(--rescue-bg); color: var(--rescue-primary-dark); }
+    .map-container {
+      height: 300px;
+      width: 100%;
+      background: var(--border);
+      position: relative;
+    }
+    #map { height: 100%; width: 100%; }
+    .selected-location-card {
+      margin: 16px;
+      padding: 16px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .selected-location-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .selected-address { font-size: 14px; color: var(--text); margin-bottom: 6px; line-height: 1.5; }
+    .selected-coords { font-size: 13px; color: var(--text-muted); }
+    .btn-confirm-wrap {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+      padding-bottom: calc(16px + env(safe-area-inset-bottom));
+      background: var(--card-bg);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+    }
+    .btn-confirm {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: inherit;
+      background: var(--rescue-primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn-confirm:hover { opacity: 0.9; }
+    .search-bar-relative { position: relative; }
+  </style>
+</head>
+<body class="rescue-theme select-location-page">
+  <div class="search-bar-wrap">
+    <button type="button" class="btn-back-map" id="btnBack" aria-label="Quay lại">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <div class="search-bar-relative" style="flex:1;">
+      <div class="search-input-wrap">
+        <input type="text" class="search-input" id="searchInput" placeholder="Tìm kiếm địa chỉ..." autocomplete="off" />
+        <button type="button" class="btn-clear-search" id="btnClearSearch" aria-label="Xóa">×</button>
+      </div>
+      <div class="search-results hidden" id="searchResults"></div>
+    </div>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+  </div>
+
+  <div class="selected-location-card">
+    <h3>Vị trí đã chọn</h3>
+    <p class="selected-address" id="selectedAddress">-</p>
+    <p class="selected-coords" id="selectedCoords">-</p>
+  </div>
+
+  <div class="btn-confirm-wrap">
+    <button type="button" class="btn-confirm" id="btnConfirm">Xác nhận</button>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="select-location.js"></script>
+</body>
+</html>

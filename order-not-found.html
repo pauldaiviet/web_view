@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#1e3a5f">
+  <title>Đơn hàng không tồn tại</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .order-not-found {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--danger);
+    }
+    .order-not-found svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+    .order-not-found h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .order-not-found p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .order-not-found .btn-back-page {
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .order-not-found .btn-back-page:hover {
+      background: var(--primary-light);
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="javascript:history.back()" class="btn-back" aria-label="Quay lại">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <h1>Chi tiết đơn hàng</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="order-not-found">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <h2>Đơn hàng không tồn tại</h2>
+      <p>Đơn hàng bạn đang tìm kiếm không tồn tại hoặc đã bị xóa. Vui lòng kiểm tra lại liên kết hoặc thử lại sau.</p>
+      <a href="javascript:history.back()" class="btn-back-page">Quay lại</a>
+    </div>
+  </main>
+
+  <script>
+    // Fallback: nếu không có history, về trang chủ hoặc đóng
+    document.querySelector('.order-not-found .btn-back-page').addEventListener('click', function(e) {
+      if (window.history.length <= 1) {
+        e.preventDefault();
+        window.close();
+        if (!window.closed) window.location.href = 'index.html';
+      }
+    });
+  </script>
+</body>
+</html>

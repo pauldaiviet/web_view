@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Yêu cầu cứu hộ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="rescue-theme">
+    <header class="header header-rescue">
+      <div class="status-bar">
+        <span class="status-time" id="statusTime">9:41</span>
+        <div class="status-icons">
+          <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="2" y="14" width="2" height="6" />
+            <rect x="6" y="10" width="2" height="10" />
+            <rect x="10" y="6" width="2" height="14" />
+            <rect x="14" y="2" width="2" height="18" />
+          </svg>
+          <svg class="status-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.7 2.06 7.3 2.06 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"
+            />
+          </svg>
+          <svg class="status-icon status-battery" viewBox="0 0 24 24">
+            <rect
+              x="1"
+              y="6"
+              width="18"
+              height="12"
+              rx="2"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            />
+            <rect
+              x="3"
+              y="8"
+              width="14"
+              height="8"
+              rx="1"
+              fill="currentColor"
+            />
+            <rect
+              x="19"
+              y="9"
+              width="1.5"
+              height="6"
+              rx="0.5"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+      </div>
+      <div class="appbar-content">
+        <div class="appbar-main">
+          <div class="appbar-row">
+            <p class="appbar-title" id="rescueTitle">Yêu cầu cứu hộ</p>
+            <span class="tag tag-package" id="packageTag">Đơn lẻ</span>
+            <span class="tag tag-plate" id="plateTag">-</span>
+          </div>
+          <p class="appbar-subtitle" id="orderCodeDate">-</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <div class="loading" id="loading">
+        <div class="loading-spinner"></div>
+        <span>Đang tải thông tin yêu cầu cứu hộ...</span>
+      </div>
+
+      <div class="content hidden" id="content">
+        <section class="map-section">
+          <iframe
+            id="mapFrame"
+            class="map-iframe"
+            title="Bản đồ vị trí"
+            loading="lazy"
+          ></iframe>
+          <div class="location-detail">
+            <div class="location-header">
+              <span class="location-label">Vị trí cứu hộ</span>
+              <button
+                type="button"
+                class="btn-edit-location"
+                aria-label="Chỉnh sửa vị trí"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <p class="location-address" id="incidentLocation">-</p>
+            <div height="10px" style=" width: 100% ; height: 10px;"></div>
+
+            <div class="progress-steps">
+                <div class="progress-step done" data-step="0">
+                  <span class="step-dot"></span>
+                  <span class="step-label">Chờ cứu hộ</span>
+                </div>
+                <div class="progress-step" data-step="1">
+                  <span class="step-dot"></span>
+                  <span class="step-label">Tài xế đang đến</span>
+                </div>
+                <div class="progress-step" data-step="2">
+                  <span class="step-dot"></span>
+                  <span class="step-label">Đang cứu hộ</span>
+                </div>
+                <div class="progress-step" data-step="3">
+                  <span class="step-dot"></span>
+                  <span class="step-label">Hoàn thành cứu hộ</span>
+                </div>
+              </div>
+          </div>
+        </section>
+
+        <div id="vehicleIncidentContainer"></div>
+
+        <section class="info-card">
+          <h3 class="section-title">Dịch vụ</h3>
+          <div class="services-list" id="servicesList">
+            <p class="services-empty" id="servicesEmpty">Chưa chọn dịch vụ</p>
+          </div>
+        </section>
+      </div>
+      <div height="10px" style=" width: 100% ; height: 200px;"></div>
+    </main>
+
+    <div class="action-buttons action-buttons-rescue hidden" id="actionButtons">
+      <button type="button" class="btn btn-update" id="btnUpdate">
+        Cập nhật yêu cầu
+      </button>
+      <button type="button" class="btn btn-call-cs" id="btnCallCS">
+        Gọi CSKH
+      </button>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="vehicle-incident-edit.js"></script>
+  </body>
+</html>
