@@ -1,0 +1,59 @@
+<section class="info-card rating-section" id="ratingSection">
+  <!-- Chưa có đánh giá: form gửi đánh giá -->
+  <div class="rating-form-wrap hidden" id="ratingFormWrap">
+    <h3 class="section-title">Đánh giá dịch vụ cứu hộ</h3>
+    <div class="rating-stars-input" id="ratingStarsInput" aria-label="Chọn số sao">
+      <button type="button" class="star-btn" data-value="1" aria-label="1 sao">
+        <svg class="star-icon star-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </button>
+      <button type="button" class="star-btn" data-value="2" aria-label="2 sao">
+        <svg class="star-icon star-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </button>
+      <button type="button" class="star-btn" data-value="3" aria-label="3 sao">
+        <svg class="star-icon star-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </button>
+      <button type="button" class="star-btn" data-value="4" aria-label="4 sao">
+        <svg class="star-icon star-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </button>
+      <button type="button" class="star-btn" data-value="5" aria-label="5 sao">
+        <svg class="star-icon star-outline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </button>
+    </div>
+    <div class="rating-comment-wrap">
+      <textarea
+        class="rating-comment-input"
+        id="ratingCommentInput"
+        placeholder="Bạn có thể chia sẻ thêm trải nghiệm của mình"
+        rows="4"
+        maxlength="250"
+      ></textarea>
+      <span class="rating-char-count" id="ratingCharCount">(0/250)</span>
+    </div>
+    <div class="rating-submit-wrap">
+      <button type="button" class="btn btn-submit-rating" id="btnSubmitRating">Gửi đánh giá</button>
+    </div>
+  </div>
+
+  <!-- Đã có đánh giá: hiển thị -->
+  <div class="rating-display-wrap hidden" id="ratingDisplayWrap">
+    <div class="rating-display-header">
+      <span class="rating-display-label">Đánh giá</span>
+      <div class="rating-stars-display" id="ratingStarsDisplay"></div>
+    </div>
+    <div class="rating-display-separator"></div>
+    <div class="rating-display-detail">
+      <span class="rating-detail-label">Đánh giá chi tiết</span>
+      <p class="rating-detail-content" id="ratingDetailContent">-</p>
+    </div>
+  </div>
+</section>

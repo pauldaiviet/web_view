@@ -14,11 +14,13 @@
         "towDestination": null,
         "towDestinationLongitude": null,
         "towDestinationLatitude": null,
-        "status": "IN_PROGRESS",
+        "status": "CANCELLED",
         "rescueStaffName": "Ngô Quang Hùng",
         "rescueStaffPhone": "0386993799",
         "rescueStaffPlate": null,
-        "states": [],
+        "states": [
+            "CANCELLED_BY_CUSTOMER"
+        ],
         "invoiceCode": null,
         "referenceCode": null,
         "shortReferenceCode": null,
@@ -33,12 +35,14 @@
             {
                 "id": 2,
                 "name": "Kích bình ắc quy",
+                "description": "Kích bình ắc quy",
                 "usageCount": 1,
                 "usageType": "KM"
             },
             {
                 "id": 3,
                 "name": "Cung cấp nhiên liệu khẩn cấp (xăng, dầu, nước làm mát)",
+                "description": "Cung cấp nhiên liệu khẩn cấp (xăng, dầu, nước làm mát,...)",
                 "usageCount": 1,
                 "usageType": "LITERS"
             }
