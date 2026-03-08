@@ -1,0 +1,58 @@
+{
+    "message": "OK",
+    "code": "00",
+    "data": {
+        "id": 8,
+        "plate": "99A97027",
+        "packagePurchasedId": null,
+        "rescueStationAddress": "Đường Trịnh Kiểm, Đông Sơn, Thanh Hóa, Phường Đông Quang, Tỉnh Thanh Hóa, 45000, Việt Nam",
+        "rescueStationLat": 21.028417,
+        "rescueStationLong": 105.780458,
+        "incidentLocation": "10 Láng Hạ, Hà Nội",
+        "incidentLocationLat": 21.018,
+        "incidentLocationLong": 105.815,
+        "towDestination": null,
+        "towDestinationLongitude": null,
+        "towDestinationLatitude": null,
+        "status": "IN_PROGRESS",
+        "rescueStaffName": "Ngô Quang Hùng",
+        "rescueStaffPhone": "0386993799",
+        "rescueStaffPlate": "51D22222",
+        "states": [
+            "RESCUE_IN_PROGRESS"
+        ],
+        "invoiceCode": null,
+        "referenceCode": null,
+        "shortReferenceCode": null,
+        "vehicleStatusDescription": "Lốp trước bên phải bị nổ, không có lốp dự phòng, cần hỗ trợ thay lốp tại chỗ.",
+        "partialDeposit": null,
+        "actualAmount": 0,
+        "additionalAmount": null,
+        "actualVat": 0,
+        "reportedTime": "2026-03-06T10:32:03.607636",
+        "completionTime": null,
+        "services": [
+            {
+                "id": 2,
+                "name": "Kích bình ắc quy",
+                "description": "Kích bình ắc quy",
+                "usageCount": 1,
+                "usageType": "KM"
+            },
+            {
+                "id": 3,
+                "name": "Cung cấp nhiên liệu khẩn cấp (xăng, dầu, nước làm mát)",
+                "description": "Cung cấp nhiên liệu khẩn cấp (xăng, dầu, nước làm mát,...)",
+                "usageCount": 1,
+                "usageType": "LITERS"
+            }
+        ],
+        "rateComment": null,
+        "star": null,
+        "orderSource": "MOBILE",
+        "remainAmount": null,
+        "invoiceLink": null,
+        "totalAmount": null,
+        "rescueOrderCode": "RS_TEST_005"
+    }
+}

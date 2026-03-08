@@ -1,0 +1,49 @@
+---
+description: Ghi nhớ luồng API và cập nhật UI cho WebView cứu hộ
+globs: app.js, **/web_view/**
+alwaysApply: false
+---
+
+# WebView cứu hộ - Luồng API và UI
+
+## Hiện tại (Mock)
+- Dữ liệu lấy từ file JSON trong `mock-data/` (INITIAL, CONFIRMED, ASSIGNING, IN_PROGRESS, COMPLETED, CANCELLED, FAILED)
+- `fetchOrder()` trả về `json.data` hoặc `json`
+- `CONFIG.MOCK_MODE = true` → hiển thị floating button chọn mock
+
+## Kế hoạch chuyển sang API thật
+- Thay thế mock data bằng gọi API thật
+- API trả về response tương tự cấu trúc hiện tại
+- **Cập nhật UI dựa theo response** – logic không đổi, chỉ nguồn dữ liệu thay đổi
+
+## Cấu trúc response API (tương đương mock)
+
+```json
+{
+  "message": "OK",
+  "code": "00",
+  "data": {
+    "id", "plate", "status", "states", "incidentLocation",
+    "incidentLocationLat", "incidentLocationLong", "services",
+    "vehicleStatusDescription", "rescueStaffName", "rescueStaffPhone", ...
+  }
+}
+```
+
+- `status`: INITIAL | CONFIRMED | ASSIGNING | IN_PROGRESS | COMPLETED | CANCELLED | FAILED
+- `states`: mảng (VD: `["DRIVER_ON_THE_WAY"]`, `["FAILED_NO_DRIVER"]`)
+
+## Logic UI (giữ nguyên khi chuyển sang API)
+- `renderOrder(order)` – render toàn bộ UI từ `order` (response.data)
+- `getProgressInfo(order)` – xác định progress steps theo `status` và `states`:
+  - INITIAL, CONFIRMED, ASSIGNING → Chờ cứu hộ
+  - IN_PROGRESS + states → DRIVER_ON_THE_WAY, RESCUE_IN_PROGRESS, RESCUE_MOVE_TO_TOWING_POINT, RESCUE_COMPLETED_BY_DRIVER
+  - COMPLETED → Hoàn thành cứu hộ
+  - FAILED + states → FAILED_NO_PROVIDER, FAILED_NO_DRIVER, FAILED_SYSTEM_ERROR
+  - CANCELLED → Đơn hàng đã bị hủy
+
+## Khi implement API thật
+1. Đặt `CONFIG.MOCK_MODE = false` → ẩn floating mock selector
+2. Sửa `fetchOrder()` gọi `CONFIG.ORDER_API` với token
+3. Parse response: `const orderData = res.data || res.order || res` (tương thích nhiều format)
+4. Gọi `renderOrder(orderData)` như hiện tại – UI tự cập nhật theo response

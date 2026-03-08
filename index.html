@@ -26,7 +26,7 @@
         <div class="appbar-main">
           <div class="appbar-row">
             <p class="appbar-title" id="rescueTitle">Yêu cầu cứu hộ</p>
-            <span class="tag tag-package" id="packageTag">Đơn lẻ1</span>
+            <span class="tag tag-package" id="packageTag">---</span>
             <span class="tag tag-plate" id="plateTag">-</span>
           </div>
           <p class="appbar-subtitle" id="orderCodeDate">-</p>
@@ -49,67 +49,114 @@
             loading="lazy"
           ></iframe>
           <div class="location-detail">
-            <div class="location-header">
-              <span class="location-label">Vị trí cứu hộ</span>
-              <button
-                type="button"
-                class="btn-edit-location"
-                aria-label="Chỉnh sửa vị trí"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <p class="location-address" id="incidentLocation">-</p>
-            <div height="10px" style=" width: 100% ; height: 10px;"></div>
-
-            <div class="progress-steps">
-                <div class="progress-step done" data-step="0">
-                  <span class="step-dot"></span>
-                  <span class="step-label">Chờ cứu hộ</span>
+            <div class="driver-info-section hidden" id="driverInfoSection">
+              <div class="driver-info-card">
+                <div class="driver-avatar">
+                  <img src="avatar_driver.png" alt="Avatar tài xế" />
                 </div>
-                <div class="progress-step" data-step="1">
-                  <span class="step-dot"></span>
-                  <span class="step-label">Tài xế đang đến</span>
-                </div>
-                <div class="progress-step" data-step="2">
-                  <span class="step-dot"></span>
-                  <span class="step-label">Đang cứu hộ</span>
-                </div>
-                <div class="progress-step" data-step="3">
-                  <span class="step-dot"></span>
-                  <span class="step-label">Hoàn thành cứu hộ</span>
+                <div class="driver-info-content">
+                  <p class="driver-name" id="rescueStaffName">-</p>
+                  <div class="driver-meta">
+                    <a href="#" class="driver-phone" id="rescueStaffPhoneLink" data-phone="">
+                      <img src="phone.svg" alt="" width="16" height="16" />
+                      <span id="rescueStaffPhone">-</span>
+                    </a>
+                    <span class="driver-plate" id="driverPlateWrap">
+                      <img src="tow-truck.svg" alt="" width="16" height="16" />
+                      <span id="rescueStaffPlate">-</span>
+                    </span>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div class="driver-info-separator"></div>
+            
+            <div class="location-section">
+              <div class="location-header">
+                <span class="location-label" id="locationLabel">Vị trí cứu hộ</span>
+                <button type="button" class="btn-edit-location hidden" id="btnEditLocation" aria-label="Chỉnh sửa vị trí">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                  </svg>
+                </button>
+                </div>
+                <p class="location-address" id="incidentLocation">-</p>
+            </div>
+
+            <div class="progress-steps" id="progressSteps">
+              <div class="progress-step" data-step="0">
+                <span class="step-dot"></span>
+                <span class="step-label">Chờ cứu hộ</span>
+              </div>
+              <div class="progress-step" data-step="1">
+                <span class="step-dot"></span>
+                <span class="step-label">Tài xế đang đến</span>
+              </div>
+              <div class="progress-step" data-step="2">
+                <span class="step-dot"></span>
+                <span class="step-label">Đang cứu hộ</span>
+              </div>
+              <div class="progress-step" data-step="3">
+                <span class="step-dot"></span>
+                <span class="step-label">Hoàn thành</span>
+                </div>
+            </div>
+            <div class="progress-state-error hidden" id="progressStateError">
+              <span class="state-error-icon" aria-hidden="true">
+                <img src="mingcute_warning-line.svg" alt="" />
+              </span>
+              <span class="state-error-message" id="progressStateErrorMessage"></span>
+            </div>
           </div>
+          <div style=" width: 100% ; height: 20px;"></div>
         </section>
 
         <div id="vehicleIncidentContainer"></div>
-
+        <div id="ratingContainer" class="hidden">
+          <section class="info-card rating-section" id="ratingSection">
+            <div class="rating-form-wrap hidden" id="ratingFormWrap">
+              <h3 class="section-title">Đánh giá dịch vụ cứu hộ</h3>
+              <div class="rating-stars-input" id="ratingStarsInput" aria-label="Chọn số sao"></div>
+              <div class="rating-comment-wrap">
+                <textarea class="rating-comment-input" id="ratingCommentInput"
+                  placeholder="Bạn có thể chia sẻ thêm trải nghiệm của mình" rows="4" maxlength="250"></textarea>
+                <span class="rating-char-count" id="ratingCharCount">(0/250)</span>
+              </div>
+              <div class="rating-submit-wrap">
+                <button type="button" class="btn btn-submit-rating" id="btnSubmitRating">Gửi đánh giá</button>
+              </div>
+            </div>
+            <div class="rating-display-wrap hidden" id="ratingDisplayWrap">
+              <div class="rating-display-header">
+                <span class="rating-display-label">Đánh giá</span>
+                <div class="rating-stars-display" id="ratingStarsDisplay"></div>
+              </div>
+              <div class="rating-display-separator"></div>
+              <div class="rating-display-detail">
+                <span class="rating-detail-label">Đánh giá chi tiết</span>
+                <p class="rating-detail-content" id="ratingDetailContent">-</p>
+              </div>
+            </div>
+          </section>
+        </div>
         <section class="info-card">
           <h3 class="section-title">Dịch vụ</h3>
           <div class="services-list" id="servicesList">
             <p class="services-empty" id="servicesEmpty">Chưa chọn dịch vụ</p>
           </div>
         </section>
+
       </div>
       <div height="10px" style=" width: 100% ; height: 200px;"></div>
     </main>
 
     <div class="action-buttons action-buttons-rescue hidden" id="actionButtons">
-      <button type="button" class="btn btn-update" id="btnUpdate">
+      <button type="button" class="btn btn-update hidden" id="btnUpdate">
         Cập nhật yêu cầu
+      </button>
+      <button type="button" class="btn btn-call-driver hidden" id="btnCallDriver">
+        Gọi tài xế
       </button>
       <button type="button" class="btn btn-call-cs" id="btnCallCS">
         Gọi CSKH
@@ -121,7 +168,22 @@
       <iframe id="locationDrawerIframe" title="Chọn vị trí"></iframe>
     </div>
 
+    <!-- Floating button - chọn mock data (chỉ hiện khi MOCK_MODE) -->
+    <div class="floating-mock-selector hidden" id="floatingMockSelector">
+      <button type="button" class="floating-btn" id="floatingMockBtn" aria-label="Chọn mock data">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20"
+          height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+      <div class="floating-mock-panel hidden" id="floatingMockPanel">
+        <span class="floating-mock-title">Chọn trạng thái</span>
+        <div class="floating-mock-options" id="floatingMockOptions"></div>
+      </div>
+    </div>
+
     <script src="app.js"></script>
     <script src="vehicle-incident-edit.js"></script>
+    <script src="rating-section.js"></script>
   </body>
 </html>
